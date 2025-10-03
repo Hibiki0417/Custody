@@ -1,0 +1,18 @@
+{# templates/crm/customer_confirm_delete.html #}
+{% extends 'base.html' %}
+{% block h1 %}顧客の削除確認{% endblock %}
+{% block content %}
+  <p>以下の顧客を削除します。よろしいですか？</p>
+
+  <ul>
+    <li><strong>名前:</strong> {{ object.name }}</li>
+    <li><strong>会社:</strong> {{ object.company }}</li>
+    <li><strong>メール:</strong> {{ object.email }}</li>
+  </ul>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">削除する</button>
+    <a href="{% url 'crm:customer_detail' object.pk %}">キャンセル</a>
+  </form>
+{% endblock %}

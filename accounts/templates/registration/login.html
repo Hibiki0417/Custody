@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ログイン{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="max-width:400px;">
+  <h2 class="text-center mb-4">ログイン</h2>
+
+  {% if user.is_authenticated %}
+    <!-- ログイン済みならログアウトボタン表示 -->
+    <form action="{% url 'accounts:logout' %}" method="post" style="text-align:center; margin-top:1rem;">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-outline-secondary btn-sm">ログアウト</button>
+    </form>
+  {% else %}
+    <!-- 未ログインならフォーム表示 -->
+    <form method="post" action="">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-success w-100">ログイン</button>
+    </form>
+  {% endif %}
+</div>
+{% endblock %}

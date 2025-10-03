@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}新規顧客作成{% endblock %}
+
+{% block h1 %}新規顧客作成{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>顧客情報の登録</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary">登録する</button>
+        <a href="{% url 'crm:customer_list' %}" class="btn btn-secondary">キャンセル</a>
+    </form>
+</div>
+{% endblock %}

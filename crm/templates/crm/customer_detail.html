@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}顧客詳細{% endblock %}
+
+{% block h1 %}顧客詳細{% endblock %}
+
+{% block content %}
+  <p><strong>名前:</strong> {{ customer.name }}</p>
+  <p><strong>会社:</strong> {{ customer.company }}</p>
+  <p><strong>メール:</strong> {{ customer.email }}</p>
+  <p><strong>電話番号:</strong> {{ customer.phone }}</p>
+  <p><strong>ステータス:</strong> {{ customer.get_status_display }}</p>
+  <p><strong>備考:</strong> {{ customer.note }}</p>
+
+  <a href="{% url 'crm:customer_list' %}">一覧に戻る</a>
+  <a href="{% url 'crm:customer_delete' customer.pk %}">顧客情報の削除</a>
+{% endblock %}

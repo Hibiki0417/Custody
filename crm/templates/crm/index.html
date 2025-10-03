@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block title %}ホーム | Custody{% endblock %}
+{% block h1 %}ホーム{% endblock %}
+
+{% block content %}
+<!-- Hero -->
+<section class="py-5 bg-light border rounded-3 mb-4">
+  <div class="container px-4">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <h2 class="display-6 fw-bold mb-2">Custody（顧客管理）</h2>
+        <p class="lead mb-0">案件管理・連絡履歴・進捗をひと目で。今日の仕事を速く、正確に。</p>
+      </div>
+      <div class="col-md-4 text-md-end mt-3 mt-md-0">
+        <a href="{% url 'crm:customer_list' %}" class="btn btn-success btn-lg">顧客一覧</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Actions -->
+<section class="container mb-4">
+  <div class="row g-3">
+    <div class="col-md-4">
+      <a href="{% url 'crm:customer_create' %}" class="btn btn-primary w-100 py-3">
+        <i class="bi bi-person-plus me-2"></i>新規顧客登録
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a href="{% url 'crm:customer_list' %}" class="btn btn-outline-success w-100 py-3">
+        <i class="bi bi-people me-2"></i>顧客一覧
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a href="/admin/" class="btn btn-outline-secondary w-100 py-3">
+        <i class="bi bi-gear me-2"></i>管理画面
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Recent Customers -->
+<section class="container">
+  <div class="card">
+    <div class="card-header bg-success text-white">最近追加した顧客</div>
+    <ul class="list-group list-group-flush">
+      {% for c in recent_customers %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <a href="{% url 'crm:customer_detail' c.id %}" class="fw-semibold text-decoration-none">{{ c.name }}</a>
+          <span class="text-muted ms-2">{{ c.company }}</span>
+        </div>
+        <small class="text-muted">{{ c.created_at|date:"Y-m-d" }}</small>
+      </li>
+      {% empty %}
+      <li class="list-group-item text-muted">データがありません</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+{% endblock %}

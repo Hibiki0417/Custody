@@ -1,0 +1,29 @@
+/* レイアウト基盤：フッターを最下部に固定（短いページ） */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.content {
+  flex: 1; /* 余白を食って本文が伸びる → フッターが下に来る */
+}
+
+/* ナビ軽微調整 */
+.logo { height: 48px; display: block; }
+.navbar .nav-link { padding: .5rem .75rem; }
+
+/* フッター */
+.site-footer {
+  background: #1f6b2b;           /* 深い緑 */
+  color: rgba(255,255,255,.8);   /* 高めの透明度の白 */
+  text-align: center;
+  padding: 12px 0;
+  font-size: .9rem;
+}
+.site-footer p { margin: 0; }
+
+

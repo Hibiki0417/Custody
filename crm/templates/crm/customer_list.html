@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Custody 【顧客一覧】{% endblock %}
+
+{% block content %}
+<style>
+/* 顧客一覧テーブル */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+/* ヘッダー行 */
+th {
+    background-color: rgba(0, 80, 0, 0.8);  /* 深い緑 + 透明度80% */
+    color: #fff;                            /* 白文字で視認性UP */
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ccc;
+}
+
+/* データ行 */
+td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+/* 偶数行に薄い緑の背景色を適用 */
+tr:nth-child(even) {
+    background-color: rgba(0, 80, 0, 0.05);
+}
+</style>
+
+<h1> 顧客一覧</h1>
+
+<table border="1" cellpadding="5">
+  <tr>
+    <th>名前</th>
+    <th>会社</th>
+    <th>メール</th>
+    <th>電話番号</th>
+    <th>ステータス</th>
+    <th>登録者</th>
+    <th>作成日</th>
+    <th>更新日</th>
+    <th>有効</th>
+    <th>備考</th>
+  </tr>
+  {% for customer in customers %}
+  <tr>
+    <td><a href="{% url 'crm:customer_detail' customer.pk %}">{{ customer.name }}</a></td>
+    <td>{{ customer.company }}</td>
+    <td>{{ customer.email }}</td>
+    <td>{{ customer.phone }}</td>
+    <td>{{ customer.get_status_display }}</td>
+    <td>{{ customer.owner.username }}</td>
+    <td>{{ customer.created_at|date:"Y-m-d" }}</td>
+    <td>{{ customer.updated_at|date:"Y-m-d" }}</td>
+    <td>{% if customer.is_active %}✔{% else %}✖{% endif %}</td>
+    <td>{{ customer.note }}</td>
+  </tr>
+  {% empty %}
+  <tr>
+    <td colspan="10">顧客データはありません。</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<!-- ページネーション -->
+<div style="margin-top:20px;">
+  <span>
+    ページ {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+  </span>
+
+  <div>
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}">前へ</a>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <strong>{{ num }}</strong>
+      {% else %}
+        <a href="?page={{ num }}">{{ num }}</a>
+      {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">次へ</a>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
